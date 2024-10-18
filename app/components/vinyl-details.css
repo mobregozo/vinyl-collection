@@ -1,0 +1,81 @@
+.record-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  transition: transform 0.5s ease-in-out;
+}
+
+.record {
+  border-radius: 50%;
+  position: relative;
+  background: #2a2928;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  background-image: radial-gradient(
+      circle,
+      rgba(42, 41, 40, 0.5) 10%,
+      transparent 10.5%
+    ),
+    radial-gradient(circle, transparent 55%, #2a2928 56%),
+    conic-gradient(
+      transparent 0deg,
+      rgba(255, 255, 255, 0.1) 45deg,
+      transparent 90deg,
+      rgba(255, 255, 255, 0.1) 135deg,
+      transparent 180deg,
+      rgba(255, 255, 255, 0.1) 225deg,
+      transparent 270deg,
+      rgba(255, 255, 255, 0.1) 315deg,
+      transparent 360deg
+    );
+  background-size: 10px 10px, 100% 100%, 100% 100%;
+  animation-timeline: scroll();
+}
+
+.record::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  background-color: #b5ac9a;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.album:hover .record-wrapper {
+  transform: translateX(120px);
+}
+
+.album:hover .record {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.record-case {
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.album-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

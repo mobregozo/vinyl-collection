@@ -7,6 +7,7 @@ import {
 } from "@remix-run/react";
 
 import "./tailwind.css";
+import { ThemeSwitch } from "./components/theme-switch";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -19,6 +20,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body className="">
         <div className="container px-4 max-w-4xl mx-auto py-8 flex flex-col min-h-screen">
+          <ThemeSwitch />
           {children}
         </div>
         <ScrollRestoration />

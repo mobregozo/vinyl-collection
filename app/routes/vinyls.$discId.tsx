@@ -28,7 +28,6 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   }
 
   const data = await response.json();
-  console.log(JSON.stringify(data));
   return json(data); // Pass the collection data to the component
 };
 

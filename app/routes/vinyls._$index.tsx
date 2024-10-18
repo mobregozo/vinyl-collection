@@ -5,11 +5,12 @@ import { useState } from "react";
 import { Badge } from "~/components/ui/badge";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { VinylListItem } from "~/components/vinyl-list-item";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "My vinyl collection" },
+    { name: "description", content: "Welcome to my vinyl collection" },
   ];
 };
 
@@ -35,14 +36,18 @@ export const loader = async () => {
   const albums = data.releases.map((release: any) => {
     return {
       id: release.id,
-      artist: release.basic_information.artists[0].name,
+      artist: release.basic_information.artists[0].anv
+        ? release.basic_information.artists[0].anv
+        : release.basic_information.artists[0].name,
       album: release.basic_information.title,
       year: parseInt(release.basic_information.year),
-      cover: release.basic_information.cover_image,
+      cover: release.basic_information.thumb,
     };
   });
 
-  return json(albums); // Pass the collection data to the component
+  console.log(JSON.stringify(data.releases[1].basic_information.artists[0]));
+
+  return json(albums);
 };
 
 // Decade quick filters
@@ -84,8 +89,8 @@ export default function Index() {
   });
 
   return (
-    <div className="container mx-auto p-4 space-y-6 dark:bg-gray-900 dark:text-gray-100">
-      <h1 className="text-2xl font-bold mb-4">My Album Collection</h1>
+    <div className="container mx-auto p-4 space-y-6  dark:text-gray-100">
+      <h1 className="text-2xl font-bold mb-4">My Vinyl Collection</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
@@ -132,56 +137,13 @@ export default function Index() {
         </div>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4">
+      <div className="sm:grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4">
         {filteredAlbums.map((album) => (
           <Link to={`/vinyls/${album.id}`} key={album.id}>
-            <div key={album.id} className="text-center">
-              <div className="w-full aspect-square overflow-hidden rounded-md shadow-md">
-                <img
-                  src={album.cover}
-                  alt={`${album.album} by ${album.artist}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <p className="mt-2 font-semibold text-sm dark:text-gray-200">
-                {album.album} ({album.year})
-              </p>
-              <p className="text-xs text-gray-600 dark:text-gray-400">
-                {album.artist}
-              </p>
-            </div>
+            <VinylListItem album={album} />
           </Link>
         ))}
       </div>
     </div>
   );
 }
-
-// export default function Index() {
-//   const data = useLoaderData<typeof loader>();
-
-//   return (
-//     <div className="container mx-auto py-8">
-//       <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2 justify-center">
-//         {data.releases.map((release) => (
-//           <Link to={`/vinyls/${release.id}`} key={release.id}>
-//             <div className="text-center">
-//               <img
-//                 src={release.basic_information.cover_image}
-//                 alt={release.basic_information.title}
-//                 className="w-full h-auto rounded-md shadow-md"
-//               />
-//               <p className="mt-2 font-semibold text-sm">
-//                 {release.basic_information.title} (
-//                 {release.basic_information.year})
-//               </p>
-//               <p className="text-xs text-gray-600">
-//                 {release.basic_information.artists[0].name}
-//               </p>
-//             </div>
-//           </Link>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }

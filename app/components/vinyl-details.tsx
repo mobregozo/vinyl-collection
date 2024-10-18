@@ -1,7 +1,23 @@
-import { ArrowLeft, Play } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Link } from "@remix-run/react";
+import "./vinyl-details.css";
 
-export function VinylDetails({ vinyl }) {
+type VinylDetailsProps = {
+  vinyl: {
+    id: number;
+    title: string;
+    artists: { name: string }[];
+    year: number;
+    genres: string[];
+    images: { resource_url: string }[];
+    tracklist: { position: string; title: string }[];
+    notes: string;
+    country: string;
+    videos: { uri: string; title: string }[];
+  };
+};
+
+export function VinylDetails({ vinyl }: VinylDetailsProps) {
   const {
     id,
     title,
@@ -22,25 +38,26 @@ export function VinylDetails({ vinyl }) {
         Back to List
       </Link>
       <div className="mx-auto space-y-8">
-        <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-stretch">
-          <div key={id} className="w-[300px] h-[300px] album">
-            {/* Vinyl record */}
+        <div className="flex flex-col lg:flex-row gap-12 items-start lg:items-stretch">
+          <div key={id} className="w-[300px] h-[300px] album relative">
             <div className="w-[300px] h-[300px] record-wrapper">
               <div className="w-[270px] h-[270px] record"></div>
             </div>
-            {/* Album cover */}
             <div className="w-[300px] h-[300px] record-case">
               <img
                 src={images[0]?.resource_url}
                 alt={title}
                 className="album-cover"
+                style={{ viewTransitionName: title }}
               />
             </div>
           </div>
           <div className="flex-1 space-y-4">
             <div>
               <h1 className="text-3xl font-bold mb-2">{title}</h1>
-              <p className="text-xl text-gray-600 mb-2">{artists[0]?.name}</p>
+              <p className="text-xl text-gray-600 dark:text-gray-300 mb-2">
+                {artists[0]?.name}
+              </p>
               <div className="flex items-center gap-2 mb-2">
                 {genres.map((genre) => (
                   <span
@@ -50,23 +67,29 @@ export function VinylDetails({ vinyl }) {
                     {genre}
                   </span>
                 ))}
-
-                <span className="text-sm text-gray-500">
-                  Release Date: {year} - {country}
-                </span>
+              </div>
+              <div className="text-sm text-gray-500 dark:text-gray-200">
+                Release Date: {year} - {country}
               </div>
             </div>
-            <div>
-              <h2 className="text-xl font-semibold mb-2">Notes</h2>
-              <p className="text-sm text-gray-600">{notes}</p>
-            </div>
+            {notes && (
+              <div>
+                <h2 className="text-xl font-semibold mb-2">Notes</h2>
+                <p className="text-sm text-gray-600 dark:text-gray-300 whitespace-break-spaces">
+                  {notes}
+                </p>
+              </div>
+            )}
           </div>
         </div>
         <div>
           <h2 className="text-xl font-semibold mb-2">Tracklist</h2>
-          <ol className=" list-inside text-gray-700 columns-2 sm:columns-3">
+          <ol className=" list-inside columns-2 sm:columns-3">
             {tracklist.map((track, index) => (
-              <li key={index} className="text-gray-500 text-sm">
+              <li
+                key={index}
+                className="text-gray-500 dark:text-gray-200 text-sm"
+              >
                 {track.position} - {track.title}
               </li>
             ))}
@@ -82,7 +105,6 @@ export function VinylDetails({ vinyl }) {
                     className="w-full h-full rounded-sm"
                     src={video.uri.replace("watch?v=", "embed/")}
                     title={video.title}
-                    frameBorder="0"
                     allowFullScreen
                   ></iframe>
                 </div>
