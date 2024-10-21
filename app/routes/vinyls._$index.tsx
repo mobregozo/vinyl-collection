@@ -9,7 +9,7 @@ import { VinylListItem } from "~/components/vinyl-list-item";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "My vinyl collection" },
+    { title: "My Vinyl Website | Collection" },
     { name: "description", content: "Welcome to my vinyl collection" },
   ];
 };
@@ -134,6 +134,13 @@ export default function Index() {
               {decade.label}
             </Badge>
           ))}
+          <Badge
+            className="cursor-pointer dark:hover:bg-gray-400"
+            onClick={() => setActiveDecades([])}
+          >
+            {" "}
+            Clear{" "}
+          </Badge>
         </div>
       </div>
 
