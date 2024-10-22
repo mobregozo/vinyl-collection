@@ -1,6 +1,16 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Disc3, ShoppingCart } from "lucide-react";
 import { Link } from "@remix-run/react";
 import "./vinyl-details.css";
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Table,
+} from "components/ui/table";
+import { Card, CardContent } from "components/ui/card";
+import { Badge } from "./ui/badge";
 
 type VinylDetailsProps = {
   vinyl: {
@@ -15,9 +25,16 @@ type VinylDetailsProps = {
     country: string;
     videos: { uri: string; title: string }[];
   };
+  pricing?: {
+    num_for_sale: number;
+    lowest_price: {
+      value: number;
+      currency: string;
+    };
+  };
 };
 
-export function VinylDetails({ vinyl }: VinylDetailsProps) {
+export function VinylDetails({ vinyl, pricing }: VinylDetailsProps) {
   const {
     id,
     title,
@@ -31,26 +48,73 @@ export function VinylDetails({ vinyl }: VinylDetailsProps) {
     videos,
   } = vinyl;
 
+  const formatCurrency = ({
+    value,
+    currency,
+  }: {
+    value: number;
+    currency: string;
+  }) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency,
+    }).format(value);
+  };
+
   return (
     <div className="">
-      <Link to="/vinyls" className="inline-flex items-center mb-6 ">
+      {/* <Link to="/vinyls" className="inline-flex items-center mb-6 ">
         <ArrowLeft className="mr-2 h-4 w-4" />
         Back to List
-      </Link>
+      </Link> */}
       <div className="mx-auto space-y-8">
         <div className="flex flex-col lg:flex-row gap-12 items-start lg:items-stretch">
-          <div key={id} className="w-[300px] h-[300px] album relative">
-            <div className="w-[300px] h-[300px] record-wrapper">
-              <div className="w-[270px] h-[270px] record"></div>
+          <div>
+            <div key={id} className="w-[300px] h-[300px] album relative">
+              <div className="w-[300px] h-[300px] record-wrapper">
+                <div className="w-[270px] h-[270px] record"></div>
+              </div>
+              <div className="w-[300px] h-[300px] record-case">
+                <img
+                  src={images[0]?.resource_url}
+                  alt={title}
+                  className="album-cover"
+                  style={{ viewTransitionName: title }}
+                />
+              </div>
             </div>
-            <div className="w-[300px] h-[300px] record-case">
-              <img
-                src={images[0]?.resource_url}
-                alt={title}
-                className="album-cover"
-                style={{ viewTransitionName: title }}
-              />
-            </div>
+
+            {pricing && (
+              <Card className="my-4 w-full max-w-md bg-background text-foreground border-2 border-primary rounded-md overflow-hidden">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <Disc3 className="h-12 w-12 animate-spin-slow text-primary" />
+                    <h2 className="text-xl font-bold">Vinyl Market Pulse</h2>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="">Records Available</span>
+                      <Badge variant="outline" className="px-3 py-1">
+                        {pricing.num_for_sale}
+                      </Badge>
+                    </div>
+
+                    <div className="flex items-center justify-between mt-4">
+                      <span>Lowest Price</span>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-lg font-bold">
+                          {formatCurrency({
+                            value: pricing.lowest_price.value,
+                            currency: pricing.lowest_price.currency,
+                          })}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
           <div className="flex-1 space-y-4">
             <div>

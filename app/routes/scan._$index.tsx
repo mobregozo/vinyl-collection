@@ -1,7 +1,7 @@
 import { json } from "@remix-run/node";
 import { Link, useLoaderData, useNavigate } from "@remix-run/react";
 import { Button } from "components/ui/button";
-import { Loader2, Search } from "lucide-react";
+import { CircleX, Search } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { BarcodeReader } from "~/components/barcode-scanner";
 import { Input } from "~/components/ui/input";
@@ -97,7 +97,7 @@ export default function VinylSearch() {
 
       {/* Search Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex space-x-2">
+        <div className="md:flex md:space-x-4">
           <Input
             type="text"
             value={searchTerm}
@@ -105,13 +105,16 @@ export default function VinylSearch() {
             placeholder="Enter barcode or search term"
             className="flex-grow"
           />
-          <Button type="submit">
-            <Search className="mr-2 h-4 w-4" />
-            Search
-          </Button>
-          <Button className="ml-2" onClick={handleClear}>
-            Clear
-          </Button>
+          <div className="mt-4 w-full md:mt-0 md:w-auto flex space-x-4">
+            <Button type="submit" className="w-full">
+              <Search className="wmr-2 h-4 w-4" />
+              Search
+            </Button>
+            <Button className="w-full ml-2" onClick={handleClear}>
+              <CircleX className="wmr-2 h-4 w-4" />
+              Clear
+            </Button>
+          </div>
         </div>
       </form>
 
@@ -127,7 +130,7 @@ export default function VinylSearch() {
         <div className="mt-4">
           <h3 className="text-lg font-semibold col-span-full mb-4">Results:</h3>
           <div className="sm:grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4">
-            {results.slice(0, 5).map((album) => (
+            {results.slice(0, 10).map((album) => (
               <Link to={`/vinyls/${album.id}`} key={album.id}>
                 <VinylListItem album={album} />
               </Link>
@@ -138,7 +141,7 @@ export default function VinylSearch() {
 
       {results && results.length === 0 && (
         <div className="mt-4 p-4 bg-yellow-100 text-yellow-700 rounded-lg">
-          No results found.
+          There are no items to show
         </div>
       )}
     </div>

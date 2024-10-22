@@ -26,9 +26,8 @@ export const BarcodeReader = ({
       reader.decodeFromVideoDevice(
         videoDevices[0].deviceId,
         "video",
-        (result, error) => {
+        (result) => {
           if (result) {
-            console.log(result.getText());
             onScan(result.getText());
             reader.reset();
             setIsScanning(false);
@@ -41,15 +40,15 @@ export const BarcodeReader = ({
   return (
     <div>
       <div className="mt-4">
-        <Button onClick={handleScanning} variant="outline">
+        <Button onClick={handleScanning} variant="outline" className="w-full">
           <Barcode className="mr-2 h-4 w-4" />
           {isScanning ? "Stop Scanning" : "Start Barcode Scan"}
         </Button>
       </div>
 
       {isScanning && (
-        <div className="mt-4 border-2 border-primary rounded-lg overflow-hidden">
-          <video id="video" className="w-full h-full" autoPlay></video>
+        <div className="m-0 mt-8 border-2 border-primary rounded-lg overflow-hidden max-w-xs mx-auto">
+          <video id="video" className="w-full h-48" autoPlay />
         </div>
       )}
     </div>

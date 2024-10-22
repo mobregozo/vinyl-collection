@@ -20,15 +20,20 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
   // Discogs API URL to fetch the user's collection from the default folder (folder_id=0)
   const discogsApiUrl = `https://api.discogs.com/releases/${params.discId}?token=${token}`;
+  const priceSuggestionsUrl = `https://api.discogs.com//marketplace/stats/${params.discId}?token=${token}`;
 
-  const response = await fetch(discogsApiUrl);
+  const [response, priceSuggestionsResponse] = await Promise.all([
+    fetch(discogsApiUrl),
+    fetch(priceSuggestionsUrl),
+  ]);
 
   if (!response.ok) {
     throw new Error("Error fetching collection from Discogs");
   }
 
   const data = await response.json();
-  return json(data); // Pass the collection data to the component
+  const priceSuggestions = await priceSuggestionsResponse.json();
+  return json({ info: data, priceSuggestions: priceSuggestions }); // Pass the collection data to the component
 };
 
 export default function Index() {
@@ -36,7 +41,7 @@ export default function Index() {
 
   return (
     <>
-      <VinylDetails vinyl={vinyl} />
+      <VinylDetails vinyl={vinyl.info} pricing={vinyl.priceSuggestions} />
     </>
   );
 }
