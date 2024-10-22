@@ -39,25 +39,44 @@ export const loader = async ({ request }) => {
       }),
     });
   } catch (error) {
-    return json({ error: "Error fetching data from Discogs" }, { status: 500 });
+    return json(
+      { error: "Error fetching data from Discogs", results: [] },
+      { status: 500 }
+    );
   }
 };
+
+function createQueryParams({ barcode, query }): string {
+  const params = new URLSearchParams();
+
+  // Conditionally append `barcode` if provided
+  if (barcode) {
+    params.append("barcode", barcode);
+  }
+
+  // Conditionally append `query` if provided
+  if (query) {
+    params.append("query", query);
+  }
+
+  return params.toString();
+}
 
 export default function VinylSearch() {
   const { results, error } = useLoaderData<typeof loader>();
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
   const [barcode, setBarcode] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleSearch = async () => {
-    setIsLoading(true);
-
-    const param = `${barcode ? `barcode=${barcode}&` : ""}${
-      searchTerm ? `query=${searchTerm}` : ""
-    }`;
+    const param = createQueryParams({ barcode, query: searchTerm });
 
     navigate(`/scan?${param}`);
+  };
+
+  const handleClear = () => {
+    setBarcode("");
+    setSearchTerm("");
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -67,7 +86,9 @@ export default function VinylSearch() {
 
   const handleBarcodeScan = (result: string) => {
     setBarcode(result);
-    handleSearch();
+    const param = createQueryParams({ barcode: result, query: searchTerm });
+
+    navigate(`/scan?${param}`);
   };
 
   return (
@@ -84,13 +105,12 @@ export default function VinylSearch() {
             placeholder="Enter barcode or search term"
             className="flex-grow"
           />
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              <Search className="mr-2 h-4 w-4" />
-            )}
+          <Button type="submit">
+            <Search className="mr-2 h-4 w-4" />
             Search
+          </Button>
+          <Button className="ml-2" onClick={handleClear}>
+            Clear
           </Button>
         </div>
       </form>

@@ -45,8 +45,6 @@ export const loader = async () => {
     };
   });
 
-  console.log(JSON.stringify(data.releases[1].basic_information.artists[0]));
-
   return json(albums);
 };
 
