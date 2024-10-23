@@ -33,7 +33,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
   const data = await response.json();
   const priceSuggestions = await priceSuggestionsResponse.json();
-  return json({ info: data, priceSuggestions: priceSuggestions }); // Pass the collection data to the component
+  return json({ info: data, priceSuggestions: priceSuggestions });
 };
 
 export default function Index() {
