@@ -4,13 +4,6 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { VinylDetails } from "~/components/vinyl-details";
 import { ArrowLeft } from "lucide-react";
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
-};
-
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const token = process.env.DISCOGS_API_TOKEN;
   const username = process.env.DISCOGS_USERNAME; // Add your Discogs username to the .env file
@@ -35,6 +28,10 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   const data = await response.json();
   const priceSuggestions = await priceSuggestionsResponse.json();
   return json({ info: data, priceSuggestions: priceSuggestions });
+};
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  return [{ title: `${data?.info.title} | ${data?.info.artists[0]?.name} ` }];
 };
 
 export default function Index() {

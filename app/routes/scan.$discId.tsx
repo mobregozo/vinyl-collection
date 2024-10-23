@@ -1,15 +1,8 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { ArrowLeft } from "lucide-react";
 import { VinylDetails } from "~/components/vinyl-details";
-
-export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
-};
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const token = process.env.DISCOGS_API_TOKEN;

@@ -1,5 +1,4 @@
 import { Disc3 } from "lucide-react";
-import "./vinyl-details.css";
 import { Card, CardContent } from "components/ui/card";
 import { Badge } from "./ui/badge";
 
@@ -56,34 +55,30 @@ export function VinylDetails({ vinyl, pricing }: VinylDetailsProps) {
     <div className="mx-auto space-y-12">
       <div className="flex flex-col lg:flex-row gap-12 items-start lg:items-stretch">
         <div>
-          <div key={id} className="w-[300px] h-[300px] album relative">
-            <div className="w-[300px] h-[300px] record-wrapper">
-              <div className="w-[270px] h-[270px] record"></div>
-            </div>
-            <div className="w-[300px] h-[300px] record-case">
+          <div className="relative w-64 h-64 bg-gray-900 dark:bg-white rounded-lg">
+            <div className="absolute inset-4 bg-white rounded-lg overflow-hidden">
               <img
                 src={images[0]?.resource_url}
                 alt={title}
-                className="album-cover"
+                className="object-cover w-full h-full"
                 style={{ viewTransitionName: title }}
               />
             </div>
           </div>
 
           {pricing && (
-            <Card className="my-4 w-full max-w-md bg-background text-foreground border-2 border-primary rounded-md overflow-hidden">
+            <Card className="my-4 w-full max-w-md text-foreground border-2 border-primary rounded-md overflow-hidden">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-4">
-                  <Disc3 className="h-12 w-12 animate-spin-slow text-primary" />
-                  <h2 className="text-xl font-bold">Vinyl Market Pulse</h2>
+                  <h2 className="text-xl font-bold">Vinyl market pulse</h2>
                 </div>
 
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="">Available on Discogs</span>
-                    <Badge variant="outline" className="px-3 py-1">
-                      {pricing.num_for_sale}
-                    </Badge>
+                    <span className="">
+                      Available on <strong>Discogs</strong>
+                    </span>
+                    {pricing.num_for_sale}
                   </div>
 
                   <div className="flex items-center justify-between mt-4">
@@ -150,7 +145,10 @@ export function VinylDetails({ vinyl, pricing }: VinylDetailsProps) {
           <h2 className="text-xl font-semibold mb-4">Related Videos</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {videos.map((video, index) => (
-              <div key={index} className="aspect-w-16 aspect-h-9 border-2 rounded-md">
+              <div
+                key={index}
+                className="aspect-w-16 aspect-h-9 border-2 rounded-md"
+              >
                 <iframe
                   className="w-full h-full rounded-sm"
                   src={video.uri.replace("watch?v=", "embed/")}
