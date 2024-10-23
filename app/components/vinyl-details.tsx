@@ -80,7 +80,7 @@ export function VinylDetails({ vinyl, pricing }: VinylDetailsProps) {
 
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="">Records Available</span>
+                    <span className="">Available on Discogs</span>
                     <Badge variant="outline" className="px-3 py-1">
                       {pricing.num_for_sale}
                     </Badge>

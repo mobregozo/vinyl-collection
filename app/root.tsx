@@ -111,6 +111,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
+        <script defer data-domain="vinyl-collection-rho.vercel.app" src="https://plausible.io/js/script.js"></script>
       </head>
       <body className="bg-gray-100 dark:bg-gray-900">
         <main className="container px-4 max-w-4xl mx-auto pb-8 flex flex-col min-h-screen">

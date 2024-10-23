@@ -5,6 +5,7 @@ type VinylListItemProps = {
     album: string;
     year: number;
     cover: string;
+    country?: string;
   };
 };
 
@@ -28,6 +29,11 @@ export const VinylListItem = ({ album }: VinylListItemProps) => {
         <p className="sm:text-xs text-md text-gray-600 dark:text-gray-400">
           {album.artist}
         </p>
+        {album.country && (
+          <p className="sm:text-xs text-md text-gray-800 dark:text-gray-200">
+            {album.country}
+          </p>
+        )}
       </div>
     </div>
   );

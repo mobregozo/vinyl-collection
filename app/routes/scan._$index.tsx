@@ -35,6 +35,7 @@ export const loader = async ({ request }) => {
           album: release.title.split(" - ")[1],
           year: parseInt(release.year),
           cover: release.thumb,
+          country: release.country,
         };
       }),
     });
