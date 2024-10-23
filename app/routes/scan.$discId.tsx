@@ -1,8 +1,8 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import { VinylDetails } from "~/components/vinyl-details";
 import { ArrowLeft } from "lucide-react";
+import { VinylDetails } from "~/components/vinyl-details";
 
 export const meta: MetaFunction = () => {
   return [
@@ -43,9 +43,9 @@ export default function Index() {
   return (
     <>
       <div className="flex justify-between items-center mb-4">
-        <Link to="/vinyls" className="flex items-center space-x-2">
+        <Link to="/scan" className="flex items-center space-x-2">
           <ArrowLeft className="h-8" />
-          <span>Back to collection</span>
+          <span>Back to scanning</span>
         </Link>
       </div>
       <VinylDetails vinyl={vinyl.info} pricing={vinyl.priceSuggestions} />

@@ -93,7 +93,7 @@ export default function VinylSearch() {
 
   return (
     <div className="container">
-      <h1 className="text-3xl font-bold mb-4">Search for Vinyl Records</h1>
+      <h1 className="text-3xl font-bold mb-12 mt-4">Search for releases</h1>
 
       {/* Search Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -103,7 +103,7 @@ export default function VinylSearch() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Enter barcode or search term"
-            className="flex-grow"
+            className="flex-grow bg-white dark:bg-gray-800"
           />
           <div className="mt-4 w-full md:mt-0 md:w-auto flex space-x-4">
             <Button type="submit" className="w-full">
@@ -127,11 +127,11 @@ export default function VinylSearch() {
       )}
 
       {results && results.length > 0 && (
-        <div className="mt-4">
+        <div className="mt-10">
           <h3 className="text-lg font-semibold col-span-full mb-4">Results:</h3>
           <div className="sm:grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4">
             {results.slice(0, 10).map((album) => (
-              <Link to={`/vinyls/${album.id}`} key={album.id}>
+              <Link to={`/scan/${album.id}`} key={album.id}>
                 <VinylListItem album={album} />
               </Link>
             ))}
@@ -140,8 +140,8 @@ export default function VinylSearch() {
       )}
 
       {results && results.length === 0 && (
-        <div className="mt-4 p-4 bg-yellow-100 text-yellow-700 rounded-lg">
-          There are no items to show
+        <div className="mt-16 text-gray-500 dark:text-gray-200 text-center">
+          There are no items to show.
         </div>
       )}
     </div>

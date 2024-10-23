@@ -40,7 +40,7 @@ export const BarcodeReader = ({
   return (
     <div>
       <div className="mt-4">
-        <Button onClick={handleScanning} variant="outline" className="w-full">
+        <Button onClick={handleScanning} className="w-full">
           <Barcode className="mr-2 h-4 w-4" />
           {isScanning ? "Stop Scanning" : "Start Barcode Scan"}
         </Button>

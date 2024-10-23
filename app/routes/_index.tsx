@@ -17,7 +17,7 @@ const links = [
 
 export default function Index() {
   return (
-    <div className="flex items-center justify-center min-h-screen  p-4">
+    <div className="flex items-center justify-center h-full flex-1">
       <div className="grid grid-cols-2 gap-6">
         {links.map(({ to, label, icon: Icon }) => (
           <Link to={to} key={to}>
