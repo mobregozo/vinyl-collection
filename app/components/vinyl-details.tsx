@@ -1,7 +1,3 @@
-import { Disc3 } from "lucide-react";
-import { Card, CardContent } from "components/ui/card";
-import { Badge } from "./ui/badge";
-
 type VinylDetailsProps = {
   vinyl: {
     id: number;
@@ -53,27 +49,24 @@ export function VinylDetails({ vinyl, pricing }: VinylDetailsProps) {
 
   return (
     <div className="mx-auto space-y-12">
-      <div className="flex flex-col lg:flex-row gap-12 items-start lg:items-stretch">
+      <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-stretch">
         <div>
-          <div className="relative w-64 h-64 bg-gray-900 dark:bg-white rounded-lg">
-            <div className="absolute inset-4 bg-white rounded-lg overflow-hidden">
+          <div className="p-4 bg-gray-900 dark:bg-white rounded-lg">
+            <div className=" ">
               <img
                 src={images[0]?.resource_url}
                 alt={title}
-                className="object-cover w-full h-full"
+                className="object-cover w-64 h-64 rounded-lg overflow-hidden"
                 style={{ viewTransitionName: title }}
               />
             </div>
-          </div>
-
-          {pricing && (
-            <Card className="my-4 w-full max-w-md text-foreground border-2 border-primary rounded-md overflow-hidden">
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-bold">Vinyl market pulse</h2>
+            {pricing && (
+              <div className="text-white dark:text-foreground mt-6">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="text-xl font-semibold">Vinyl market pulse</h2>
                 </div>
 
-                <div className="space-y-4">
+                <div>
                   <div className="flex items-center justify-between">
                     <span className="">
                       Available on <strong>Discogs</strong>
@@ -81,10 +74,10 @@ export function VinylDetails({ vinyl, pricing }: VinylDetailsProps) {
                     {pricing.num_for_sale}
                   </div>
 
-                  <div className="flex items-center justify-between mt-4">
+                  <div className="flex items-center justify-between">
                     <span>Lowest Price</span>
                     <div className="flex items-center space-x-2">
-                      <span className="text-lg font-bold">
+                      <span className="font-semibold">
                         {formatCurrency({
                           value: pricing.lowest_price.value,
                           currency: pricing.lowest_price.currency,
@@ -93,9 +86,9 @@ export function VinylDetails({ vinyl, pricing }: VinylDetailsProps) {
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+              </div>
+            )}
+          </div>
         </div>
         <div className="flex-1 space-y-4 z-50">
           <div>
