@@ -51,7 +51,7 @@ export function VinylDetails({ vinyl, pricing }: VinylDetailsProps) {
     <div className="mx-auto space-y-12">
       <div className="flex flex-col lg:flex-row gap-8 items-start lg:items-stretch">
         <div>
-          <div className="p-4 bg-gray-900 dark:bg-white rounded-lg">
+          <div className="p-4 bg-gray-900 dark:bg-foreground rounded-lg">
             <div className=" ">
               <img
                 src={images[0]?.resource_url}
@@ -61,7 +61,7 @@ export function VinylDetails({ vinyl, pricing }: VinylDetailsProps) {
               />
             </div>
             {pricing && (
-              <div className="text-white dark:text-foreground mt-6">
+              <div className="text-white dark:text-gray-700 mt-6">
                 <div className="flex items-center justify-between mb-2">
                   <h2 className="text-xl font-semibold">Vinyl market pulse</h2>
                 </div>
