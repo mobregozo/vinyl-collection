@@ -17,6 +17,8 @@
     "@remix-run/node": "^2.12.1",
     "@remix-run/react": "^2.12.1",
     "@remix-run/serve": "^2.12.1",
+    "@supabase/ssr": "^0.5.1",
+    "@supabase/supabase-js": "^2.45.6",
     "@zxing/library": "^0.21.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -25,6 +27,7 @@
     "lucide-react": "^0.451.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "remix-themes": "^1.5.1",
     "tailwind-merge": "^2.5.3",
     "tailwindcss-animate": "^1.0.7"
   },

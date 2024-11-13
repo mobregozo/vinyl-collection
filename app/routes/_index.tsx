@@ -1,7 +1,7 @@
 import type { MetaFunction } from "@remix-run/node";
 import { Link } from "@remix-run/react";
 import { Button } from "components/ui/button";
-import { Album, Disc } from "lucide-react";
+import { Album, ChartBar, Disc, DiscAlbum } from "lucide-react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -13,6 +13,8 @@ export const meta: MetaFunction = () => {
 const links = [
   { to: "/scan", label: "Scan Vinyl", icon: Disc },
   { to: "/vinyls", label: "My Collection", icon: Album },
+  { to: "/wishlist", label: "Wishlist", icon: DiscAlbum },
+  { to: "/analytics", label: "Analytics", icon: ChartBar },
 ];
 
 export default function Index() {

@@ -1,30 +1,9 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
+import { Theme, useTheme } from "remix-themes";
 
 export function ThemeSwitch() {
-  // Retrieve theme from localStorage (or default to light)
-  const [theme, setTheme] = useState(
-    typeof window !== "undefined" && localStorage.getItem("theme") === "dark"
-      ? "dark"
-      : "light"
-  );
-
-  useEffect(() => {
-    // Apply the current theme on load
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-    // Save the user's preference in localStorage
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
-  // Toggle theme handler
-  const toggleTheme = () => {
-    setTheme(theme === "light" ? "dark" : "light");
-  };
+  const [theme, setTheme] = useTheme();
 
   return (
     <div className="flex items-center justify-end">
@@ -32,9 +11,11 @@ export function ThemeSwitch() {
         className={`flex w-16 h-8 bg-gray-300 rounded-full p-1 cursor-pointer ${
           theme === "dark" ? "justify-end" : "justify-start"
         }`}
-        onClick={toggleTheme}
+        onClick={() =>
+          setTheme(theme === Theme.DARK ? Theme.LIGHT : Theme.DARK)
+        }
         animate={{
-          backgroundColor: theme === "dark" ? "#1F2937" : "#D1D5DB",
+          backgroundColor: theme === Theme.DARK ? "#1F2937" : "#D1D5DB",
         }}
       >
         <motion.div
@@ -44,15 +25,12 @@ export function ThemeSwitch() {
         >
           <motion.div
             animate={{
-              rotate: theme === "dark" ? 360 : 0,
+              rotate: theme === Theme.DARK ? 360 : 0,
             }}
             transition={{ duration: 0.7 }}
           >
-            {theme === "dark" ? (
-              <Moon className="w-4 h-4 text-gray-800" />
-            ) : (
-              <Sun className="w-4 h-4 text-yellow-500" />
-            )}
+            <Sun className={`hidden dark:block w-4 h-4 text-gray-800`} />
+            <Moon className={`dark:hidden w-4 h-4 text-yellow-500`} />
           </motion.div>
         </motion.div>
       </motion.div>

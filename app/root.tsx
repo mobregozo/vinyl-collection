@@ -6,10 +6,39 @@ import {
   ScrollRestoration,
   Link,
   useLocation,
+  useLoaderData,
 } from "@remix-run/react";
 
-import "./tailwind.css";
+import styles from "./tailwind.css?url";
+
 import { ThemeSwitch } from "./components/theme-switch";
+import { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import { themeSessionResolver } from "./sessions.server";
+import {
+  PreventFlashOnWrongTheme,
+  ThemeProvider,
+  useTheme,
+} from "remix-themes";
+import clsx from "clsx";
+
+export const links: LinksFunction = () => [{ rel: "stylesheet", href: styles }];
+
+// Return the theme from the session storage using the loader
+export async function loader({ request }: LoaderFunctionArgs) {
+  const { getTheme } = await themeSessionResolver(request);
+  return {
+    theme: getTheme(),
+  };
+}
+
+export default function AppWithProviders() {
+  const data = useLoaderData<typeof loader>();
+  return (
+    <ThemeProvider specifiedTheme={data.theme} themeAction="/action/set-theme">
+      <App />
+    </ThemeProvider>
+  );
+}
 
 function Header() {
   const location = useLocation();
@@ -88,6 +117,16 @@ function Header() {
           Scan
         </Link>
         <Link
+          to="/wishlist"
+          className={`text-sm font-medium transition-colors duration-200 ${
+            isActive("/wishlist")
+              ? "text-blue-600 dark:text-blue-400"
+              : "text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400"
+          }`}
+        >
+          Wishlist
+        </Link>
+        <Link
           to="/vinyls"
           className={`text-sm font-medium transition-colors duration-200 ${
             isActive("/vinyls")
@@ -103,28 +142,31 @@ function Header() {
   );
 }
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function App() {
+  const data = useLoaderData<typeof loader>();
+  const [theme] = useTheme();
   return (
-    <html lang="en" className="font-sans">
+    <html lang="en" data-theme={theme ?? ''} className={clsx(theme)}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
+        <PreventFlashOnWrongTheme ssrTheme={Boolean(data.theme)} />
         <Links />
-        <script defer data-domain="vinyl-collection-rho.vercel.app" src="https://plausible.io/js/script.js"></script>
+        <script
+          defer
+          data-domain="vinyl-collection-rho.vercel.app"
+          src="https://plausible.io/js/script.js"
+        ></script>
       </head>
       <body className="bg-gray-100 dark:bg-gray-900">
         <main className="container px-4 max-w-4xl mx-auto pb-8 flex flex-col min-h-screen">
           <Header />
-          {children}
+          <Outlet />
         </main>
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
-}
-
-export default function App() {
-  return <Outlet />;
 }

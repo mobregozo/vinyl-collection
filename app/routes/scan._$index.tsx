@@ -108,11 +108,11 @@ export default function VinylSearch() {
           />
           <div className="mt-4 w-full md:mt-0 md:w-auto flex space-x-4">
             <Button type="submit" className="w-full">
-              <Search className="wmr-2 h-4 w-4" />
+              <Search className="h-4 w-4" />
               Search
             </Button>
             <Button className="w-full ml-2" onClick={handleClear}>
-              <CircleX className="wmr-2 h-4 w-4" />
+              <CircleX className="h-4 w-4" />
               Clear
             </Button>
           </div>
